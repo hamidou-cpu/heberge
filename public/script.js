@@ -86,8 +86,14 @@ function initNavigation() {
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             if (menuOpen && window.innerWidth <= 768) {
-                e.preventDefault();
+                // Vérifie si c'est un lien externe (comme realisations.html)
+                if (!this.getAttribute('href').startsWith('#')) {
+                    // Ne pas empêcher la navigation pour les liens externes
+                    closeMenu();
+                    return;
+                }
                 
+                e.preventDefault();
                 const targetId = this.getAttribute('href');
                 closeMenu();
                 
