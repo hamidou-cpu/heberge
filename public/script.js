@@ -596,13 +596,26 @@ function addGlobalStyles() {
     `);
 }
 
+function handleExternalAnchorLinks() {
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (link && link.getAttribute('href') && link.getAttribute('href').includes('#')) {
+            const [pagePath, anchor] = link.getAttribute('href').split('#');
+            if (pagePath && anchor) {
+                e.preventDefault();
+                window.location.href = link.href;
+            }
+        }
+    });
+}
+
 /**
  * Initialisation globale au chargement du DOM
  */
 document.addEventListener('DOMContentLoaded', function() {
     // Ajouter les styles
     addGlobalStyles();
-    
+    handleExternalAnchorLinks();
     // Initialiser la navigation et le menu
     initNavigation();
     
